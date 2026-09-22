@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-labelledby="sarahAvatarTitle">
+  <title id="sarahAvatarTitle">Avatar for Sarah</title>
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="100" cy="100" r="100"/>
+    </clipPath>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8ecae6"/>
+      <stop offset="100%" stop-color="#219ebc"/>
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#circleClip)">
+    <rect width="200" height="200" fill="url(#bgGradient)"/>
+
+    <!-- shoulders / body -->
+    <path d="M40 200 C40 150 70 135 100 135 C130 135 160 150 160 200 Z" fill="#2a9d8f"/>
+
+    <!-- neck -->
+    <rect x="88" y="110" width="24" height="30" fill="#f4c39e"/>
+
+    <!-- hair back -->
+    <path d="M60 95 C55 50 75 25 100 25 C125 25 145 50 140 95 C140 130 125 145 100 145 C75 145 60 130 60 95 Z" fill="#6f4327"/>
+
+    <!-- face -->
+    <ellipse cx="100" cy="90" rx="38" ry="42" fill="#f4c39e"/>
+
+    <!-- hair front / fringe -->
+    <path d="M62 90 C58 55 74 32 100 32 C126 32 142 55 138 90 C134 65 118 48 100 48 C82 48 66 65 62 90 Z" fill="#6f4327"/>
+
+    <!-- ears -->
+    <circle cx="61" cy="93" r="7" fill="#f4c39e"/>
+    <circle cx="139" cy="93" r="7" fill="#f4c39e"/>
+
+    <!-- eyes -->
+    <ellipse cx="85" cy="90" rx="4.5" ry="6" fill="#4a2c1a"/>
+    <ellipse cx="115" cy="90" rx="4.5" ry="6" fill="#4a2c1a"/>
+
+    <!-- eyebrows -->
+    <path d="M77 78 Q85 73 93 78" stroke="#4a2c1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M107 78 Q115 73 123 78" stroke="#4a2c1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+    <!-- nose -->
+    <path d="M99 92 Q97 100 100 103 Q103 103 101 100" stroke="#d99c6c" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+    <!-- smile -->
+    <path d="M83 112 Q100 126 117 112" stroke="#a4462f" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <!-- blush -->
+    <ellipse cx="72" cy="104" rx="7" ry="4.5" fill="#f4a48c" opacity="0.55"/>
+    <ellipse cx="128" cy="104" rx="7" ry="4.5" fill="#f4a48c" opacity="0.55"/>
+  </g>
+
+  <circle cx="100" cy="100" r="99" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+</svg>
