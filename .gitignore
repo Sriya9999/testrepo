@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+backend/storage/
+backend/*.db
+backend/.env
+
+# Node
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+.expo/
+web/.env.local
+mobile/.env
+
+.DS_Store
