@@ -1,0 +1,39 @@
+# Local stack: docker compose up --build   then open http://localhost:3000
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment: { POSTGRES_USER: marketingos, POSTGRES_PASSWORD: marketingos, POSTGRES_DB: marketingos }
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U marketingos"], interval: 5s, retries: 10 }
+
+  redis:
+    image: redis:7-alpine
+
+  api:
+    build: ./backend
+    env_file: [{ path: ./backend/.env, required: false }]
+    environment: &backend-env
+      DATABASE_URL: postgresql+psycopg://marketingos:marketingos@postgres:5432/marketingos
+      REDIS_URL: redis://redis:6379/0
+      WEB_ORIGIN: http://localhost:3000
+      PUBLIC_API_URL: http://localhost:8000
+    ports: ["8000:8000"]
+    volumes: [storage:/data/storage]
+    depends_on: { postgres: { condition: service_healthy }, redis: { condition: service_started } }
+
+  worker:
+    build: ./backend
+    command: ["python", "-m", "app.worker"]
+    env_file: [{ path: ./backend/.env, required: false }]
+    environment: *backend-env
+    volumes: [storage:/data/storage]
+    depends_on: [api]
+
+  web:
+    build: { context: ., dockerfile: web/Dockerfile, args: { NEXT_PUBLIC_API_URL: http://localhost:8000 } }
+    ports: ["3000:3000"]
+    depends_on: [api]
+
+volumes:
+  pgdata:
+  storage:
