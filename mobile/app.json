@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "MarketingOS",
+    "slug": "marketingos",
+    "scheme": "marketingos",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": { "bundleIdentifier": "app.marketingos.mobile", "supportsTablet": true },
+    "android": { "package": "app.marketingos.mobile" },
+    "plugins": ["expo-router", "expo-secure-store", ["expo-notifications", { "color": "#E8A317" }]],
+    "experiments": { "typedRoutes": false },
+    "extra": { "apiUrl": "http://localhost:8000" }
+  }
+}
