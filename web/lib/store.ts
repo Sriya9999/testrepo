@@ -46,3 +46,23 @@ export const useAuth = create<AuthState>()(
     },
   ),
 );
+
+interface UiState {
+  websiteId: string | null;
+  geoProjectId: string | null;
+  setWebsite: (id: string | null) => void;
+  setGeoProject: (id: string | null) => void;
+}
+
+/** Per-viewer UI choices (selected website / GEO project), remembered across visits. */
+export const useUi = create<UiState>()(
+  persist(
+    (set) => ({
+      websiteId: null,
+      geoProjectId: null,
+      setWebsite: (id) => set({ websiteId: id }),
+      setGeoProject: (id) => set({ geoProjectId: id }),
+    }),
+    { name: "marketingos-ui", storage: createJSONStorage(() => localStorage) },
+  ),
+);

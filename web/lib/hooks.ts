@@ -64,3 +64,12 @@ export function errorMessage(err: unknown): string {
   if (err instanceof Error) return err.message;
   return String(err);
 }
+
+/** Query a specific workspace (e.g. an agency viewing one client) without switching the active workspace. */
+export function useWorkspaceQuery<T>(workspaceId: string | null | undefined, path: string, query?: Query) {
+  return useQuery<T>({
+    queryKey: ["api", workspaceId, path, query ?? null],
+    queryFn: () => api.get<T>(path, query, workspaceId),
+    enabled: Boolean(workspaceId),
+  });
+}

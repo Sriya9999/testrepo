@@ -3,7 +3,7 @@
 import type { ContentAsset } from "@marketingos/api-client";
 import { Copy, Download, Image as ImageIcon, Layers, Send, Wand2 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { ContentEditor, ContentView } from "@/components/content-body";
 import { Button, cn, Empty, Field, Input, Notice, PageHeader, Panel, Select, Spinner, StatusBadge, Tabs, Tag } from "@/components/ui";
@@ -26,6 +26,7 @@ interface Brand { id: string; name: string; voice: string; approved_ctas: string
 
 function Studio() {
   const router = useRouter();
+  const params = useSearchParams();
   const canWrite = useCan("content:write");
   const [tab, setTab] = useState<TabKey>("posts");
   const [type, setType] = useState("instagram:post");
@@ -49,6 +50,10 @@ function Studio() {
   useJob(imageJob, () => { refetchAsset(); setImageJob(null); });
 
   useEffect(() => { setType(TABS.find((t) => t.value === tab)!.types[0].slice(0, 2).join(":")); }, [tab]);
+  useEffect(() => {
+    const question = params.get("question");
+    if (question) { setTab("blogs"); setTimeout(() => setType("geo:answer_article"), 0); setBrief((b) => ({ ...b, question })); }
+  }, [params]);
   useEffect(() => { setEditing(null); }, [selected]);
 
   const typeInfo = formats?.formats[platform]?.find((f) => f.format === format);

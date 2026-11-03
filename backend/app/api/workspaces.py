@@ -96,7 +96,27 @@ def get_workspace(workspace_id: str, request: Request, user: CurrentUser, db: DB
     out["plan"] = {"code": plan.code, "name": plan.name, "limits": plan.limits} if plan else None
     client = db.scalar(select(Client).where(Client.client_workspace_id == ctx.workspace_id))
     out["client_id"] = str(client.id) if client else None
+    out["white_label"] = ctx.workspace.organization.white_label or {}
     return out
+
+
+class WhiteLabelIn(BaseModel):
+    agency_name: str | None = Field(default=None, max_length=200)
+    primary_color: str | None = Field(default=None, pattern=r"^#[0-9A-Fa-f]{6}$")
+    footer: str | None = Field(default=None, max_length=500)
+    logo_url: str | None = Field(default=None, max_length=500)
+
+
+@router.patch("/workspaces/{workspace_id}/white-label")
+def update_white_label(workspace_id: str, body: WhiteLabelIn, request: Request, user: CurrentUser, db: DB):
+    """Branding used on white-label reports (organization-wide)."""
+    ctx = load_workspace_context(db, user, workspace_id, client_ip(request))
+    ctx.require("workspace:manage")
+    org = ctx.workspace.organization
+    org.white_label = {**(org.white_label or {}), **body.model_dump(exclude_unset=True)}
+    audit.record(db, "organization.white_label_updated", ctx=ctx, data=body.model_dump(exclude_unset=True))
+    db.commit()
+    return org.white_label
 
 
 @router.patch("/workspaces/{workspace_id}")
