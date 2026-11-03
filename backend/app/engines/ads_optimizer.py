@@ -58,7 +58,7 @@ def analyze(rows, campaigns: dict, currency: str = "INR", today: date | None = N
     recs: list[dict] = []
 
     def money(v):
-        return f"{currency} {v / 100:,.0f}"
+        return f"{'₹' if currency == 'INR' else currency + ' '}{v / 100:,.0f}"
 
     for cid, s in stats.items():
         c = campaigns.get(cid)

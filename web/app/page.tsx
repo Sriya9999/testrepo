@@ -2,10 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useAuth } from "@/lib/store";
+import { useAuth, useHydrated } from "@/lib/store";
 
 export default function Home() {
-  const { hydrated, accessToken } = useAuth();
+  const accessToken = useAuth((s) => s.accessToken);
+  const hydrated = useHydrated();
   const router = useRouter();
   useEffect(() => {
     if (hydrated) router.replace(accessToken ? "/dashboard" : "/login");

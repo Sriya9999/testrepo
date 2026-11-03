@@ -93,7 +93,7 @@ function Studio() {
             <Field label="Topic or occasion"><Input value={brief.topic} onChange={(e) => setBrief({ ...brief, topic: e.target.value })} placeholder="Weekend special" /></Field>
             <Field label="Product or service"><Input value={brief.product} onChange={(e) => setBrief({ ...brief, product: e.target.value })} /></Field>
             <Field label="Audience"><Input value={brief.audience} onChange={(e) => setBrief({ ...brief, audience: e.target.value })} placeholder="From your brand profile" /></Field>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid gap-3">
               <Field label="Objective"><Select value={brief.objective} onChange={(e) => setBrief({ ...brief, objective: e.target.value })}
                 options={["engagement", "awareness", "traffic", "leads", "sales"].map((v) => ({ value: v, label: v[0].toUpperCase() + v.slice(1) }))} /></Field>
               <Field label="Language"><Select value={brief.language} onChange={(e) => setBrief({ ...brief, language: e.target.value })}

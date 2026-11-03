@@ -1,6 +1,7 @@
 "use client";
 
 import type { Session, User } from "@marketingos/api-client";
+import { useEffect, useState } from "react";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -9,7 +10,6 @@ interface AuthState {
   refreshToken: string | null;
   user: User | null;
   workspaceId: string | null;
-  hydrated: boolean;
   setSession: (s: Session) => void;
   setUser: (u: User) => void;
   setWorkspace: (id: string) => void;
@@ -23,7 +23,6 @@ export const useAuth = create<AuthState>()(
       refreshToken: null,
       user: null,
       workspaceId: null,
-      hydrated: false,
       setSession: (s) => {
         const current = get().workspaceId;
         const keep = s.user.workspaces.some((w) => w.id === current);
@@ -42,10 +41,20 @@ export const useAuth = create<AuthState>()(
       name: "marketingos-session",
       storage: createJSONStorage(() => localStorage),
       partialize: (s) => ({ accessToken: s.accessToken, refreshToken: s.refreshToken, user: s.user, workspaceId: s.workspaceId }),
-      onRehydrateStorage: () => () => useAuth.setState({ hydrated: true }),
     },
   ),
 );
+
+/** True once the saved session has been read from localStorage (always false during SSR). */
+export function useHydrated(): boolean {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    const unsubscribe = useAuth.persist.onFinishHydration(() => setHydrated(true));
+    setHydrated(useAuth.persist.hasHydrated());
+    return unsubscribe;
+  }, []);
+  return hydrated;
+}
 
 interface UiState {
   websiteId: string | null;

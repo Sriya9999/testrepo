@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Button, cn, Field, Input, Notice, Select, Textarea } from "@/components/ui";
 import { api } from "@/lib/api";
 import { errorMessage } from "@/lib/hooks";
-import { useAuth } from "@/lib/store";
+import { useAuth, useHydrated } from "@/lib/store";
 
 const STEPS = [
   "About you", "Account type", "Business details", "Industry", "Website", "Instagram", "Ad accounts", "Brand identity", "Plan", "Finish",
@@ -20,7 +20,8 @@ interface Plan { code: string; name: string; audience: string; price_minor: numb
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const { user, workspaceId, hydrated, accessToken, setUser } = useAuth();
+  const { user, workspaceId, accessToken, setUser } = useAuth();
+  const hydrated = useHydrated();
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);

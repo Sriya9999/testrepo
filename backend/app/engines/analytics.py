@@ -190,7 +190,7 @@ def summary_text(ov: dict, currency: str) -> list[str]:
     lines = []
 
     def money(v):
-        return f"{currency} {v / 100:,.0f}"
+        return f"{'₹' if currency == 'INR' else currency + ' '}{v / 100:,.0f}"
 
     if k["spend"]["value"] is not None:
         line = f"Ad spend was {money(k['spend']['value'])}"

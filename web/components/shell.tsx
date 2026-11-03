@@ -11,7 +11,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { api } from "@/lib/api";
 import { useApiQuery, useWorkspace } from "@/lib/hooks";
-import { useAuth } from "@/lib/store";
+import { useAuth, useHydrated } from "@/lib/store";
 import { cn } from "./ui";
 
 interface NavItem { href: string; label: string; icon: typeof Gauge; children?: { href: string; label: string }[]; agencyOnly?: boolean }
@@ -168,7 +168,8 @@ function Sidebar({ user, onNavigate }: { user: User; onNavigate?: () => void }) 
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { user, accessToken, hydrated, clear, refreshToken } = useAuth();
+  const { user, accessToken, clear, refreshToken } = useAuth();
+  const hydrated = useHydrated();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();

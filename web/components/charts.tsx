@@ -37,7 +37,7 @@ export function LineChart({ labels, series, height = 200, format = (v) => v.toLo
   const id = useId();
   const [hover, setHover] = useState<number | null>(null);
   const width = 640;
-  const pad = { top: 12, right: 12, bottom: 24, left: 44 };
+  const pad = { top: 12, right: 28, bottom: 26, left: 52 };
   const values = series.flatMap((s) => s.values.filter((v): v is number => v !== null));
   const max = niceMax(Math.max(0, ...values));
   const n = labels.length;
@@ -87,12 +87,12 @@ export function LineChart({ labels, series, height = 200, format = (v) => v.toLo
         {ticks.map((t) => (
           <g key={t}>
             <line x1={pad.left} x2={width - pad.right} y1={y(t)} y2={y(t)} stroke="var(--color-rule)" strokeDasharray={t === 0 ? undefined : "2 4"} />
-            <text x={pad.left - 8} y={y(t) + 4} textAnchor="end" fontSize="11" fill="var(--color-muted)">{format(t)}</text>
+            <text x={pad.left - 8} y={y(t) + 4} textAnchor="end" fontSize="12" fill="var(--color-muted)">{format(t)}</text>
           </g>
         ))}
         {labels.map((l, i) =>
           i % tickEvery === 0 ? (
-            <text key={l} x={x(i)} y={height - 6} textAnchor="middle" fontSize="11" fill="var(--color-muted)">{shortDate(l)}</text>
+            <text key={l} x={x(i)} y={height - 6} textAnchor="middle" fontSize="12" fill="var(--color-muted)">{shortDate(l)}</text>
           ) : null,
         )}
         {paths.map((d, i) => (

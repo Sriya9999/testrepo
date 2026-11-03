@@ -48,19 +48,21 @@ export function LinkButton({ href, children, variant = "secondary", className }:
   );
 }
 
-const control = "w-full rounded-[var(--radius-control)] border border-rule-strong bg-surface px-3 text-sm text-ink placeholder:text-faint focus:border-series-1 focus:outline-none";
+const control = "rounded-[var(--radius-control)] border border-rule-strong bg-surface px-3 text-sm text-ink placeholder:text-faint focus:border-series-1 focus:outline-none";
+
+const width = (className?: string) => (className && /(^|\s)w-/.test(className) ? "" : "w-full");
 
 export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
-  return <input {...props} className={cn(control, "h-9", props.className)} />;
+  return <input {...props} className={cn(control, width(props.className), "h-9", props.className)} />;
 }
 
 export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea {...props} className={cn(control, "py-2 leading-relaxed", props.className)} />;
+  return <textarea {...props} className={cn(control, width(props.className), "py-2 leading-relaxed", props.className)} />;
 }
 
 export function Select({ options, ...props }: SelectHTMLAttributes<HTMLSelectElement> & { options: { value: string; label: string }[] }) {
   return (
-    <select {...props} className={cn(control, "h-9 pr-8", props.className)}>
+    <select {...props} className={cn(control, width(props.className), "h-9 pr-8", props.className)}>
       {options.map((o) => (
         <option key={o.value} value={o.value}>{o.label}</option>
       ))}
@@ -81,7 +83,7 @@ export function Field({ label, hint, error, children, className }: { label: stri
 
 export function Panel({ children, className, title, actions, description }: { children: ReactNode; className?: string; title?: ReactNode; actions?: ReactNode; description?: ReactNode }) {
   return (
-    <section className={cn("rounded-[var(--radius-panel)] border border-rule bg-surface", className)}>
+    <section className={cn("min-w-0 rounded-[var(--radius-panel)] border border-rule bg-surface", className)}>
       {(title || actions) && (
         <header className="flex flex-wrap items-start justify-between gap-3 border-b border-rule px-5 py-3.5">
           <div>

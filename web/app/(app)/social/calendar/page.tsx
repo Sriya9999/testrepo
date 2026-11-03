@@ -169,7 +169,7 @@ export default function CalendarPage() {
           <Button size="sm" variant="ghost" onClick={() => shift(1)} aria-label="Next"><ChevronRight className="size-4" /></Button>
           <h2 className="ml-1 text-base font-semibold">{title}</h2>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Select aria-label="Platform" className="w-32" value="instagram" onChange={() => undefined} options={[{ value: "instagram", label: "Instagram" }]} />
           <Select aria-label="Account" className="w-44" value={accountFilter} onChange={(e) => setAccountFilter(e.target.value)}
             options={[{ value: "", label: "All accounts" }, ...(accounts ?? []).map((a) => ({ value: a.id, label: a.display_name }))]} />
