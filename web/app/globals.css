@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+/* MarketingOS tokens.
+   Ink and paper carry the interface; marigold is reserved for "waiting for your sign-off";
+   leaf marks things that are live or approved. Chart series use their own validated set. */
+@theme {
+  --color-ink: #172033;
+  --color-ink-2: #3b4456;
+  --color-muted: #5f6673;
+  --color-faint: #8a909b;
+  --color-paper: #f5f6f2;
+  --color-surface: #ffffff;
+  --color-sunk: #eceee8;
+  --color-rule: #dadfd5;
+  --color-rule-strong: #c4cabf;
+  --color-marigold: #e8a317;
+  --color-marigold-deep: #9a6a00;
+  --color-marigold-wash: #fcf3dc;
+  --color-leaf: #1e7a57;
+  --color-leaf-wash: #e3f1ea;
+  --color-danger: #b42318;
+  --color-danger-wash: #fbe9e7;
+  --color-series-1: #2f5d9e;
+  --color-series-2: #1e7a57;
+  --color-series-3: #c2770a;
+
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-control: 6px;
+  --radius-panel: 10px;
+}
+
+@layer base {
+  html {
+    color: var(--color-ink);
+    background: var(--color-paper);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    background: var(--color-paper);
+  }
+  h1, h2, h3 {
+    letter-spacing: -0.015em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-series-1);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--color-marigold-wash);
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
