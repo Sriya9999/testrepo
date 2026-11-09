@@ -3,6 +3,7 @@
 import { createApiClient, type Session } from "@marketingos/api-client";
 import { useAuth } from "./store";
 
+// An empty value means "same origin": the web server proxies /api/v1 (see API_INTERNAL_URL in next.config.ts).
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 let refreshing: Promise<boolean> | null = null;

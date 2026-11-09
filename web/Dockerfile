@@ -5,8 +5,11 @@ COPY packages/api-client packages/api-client
 COPY web/package.json web/package-lock.json web/
 RUN cd web && npm ci --no-audit --no-fund
 COPY web web
-ARG NEXT_PUBLIC_API_URL=http://localhost:8000
-ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL NEXT_TELEMETRY_DISABLED=1
+# Empty NEXT_PUBLIC_API_URL + API_INTERNAL_URL: the browser calls /api/v1 on the web origin and the
+# web server forwards it to the API. Set NEXT_PUBLIC_API_URL instead to call a public API URL directly.
+ARG NEXT_PUBLIC_API_URL=
+ARG API_INTERNAL_URL=http://api:8000
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL API_INTERNAL_URL=$API_INTERNAL_URL NEXT_TELEMETRY_DISABLED=1
 RUN cd web && npx next build
 
 FROM node:22-alpine

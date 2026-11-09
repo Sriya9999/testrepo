@@ -16,7 +16,8 @@ services:
       DATABASE_URL: postgresql+psycopg://marketingos:marketingos@postgres:5432/marketingos
       REDIS_URL: redis://redis:6379/0
       WEB_ORIGIN: http://localhost:3000
-      PUBLIC_API_URL: http://localhost:8000
+      # Media and OAuth callbacks are served through the web origin, which proxies to this API.
+      PUBLIC_API_URL: http://localhost:3000
     ports: ["8000:8000"]
     volumes: [storage:/data/storage]
     depends_on: { postgres: { condition: service_healthy }, redis: { condition: service_started } }
@@ -30,7 +31,7 @@ services:
     depends_on: [api]
 
   web:
-    build: { context: ., dockerfile: web/Dockerfile, args: { NEXT_PUBLIC_API_URL: http://localhost:8000 } }
+    build: { context: ., dockerfile: web/Dockerfile, args: { NEXT_PUBLIC_API_URL: "", API_INTERNAL_URL: "http://api:8000" } }
     ports: ["3000:3000"]
     depends_on: [api]
 

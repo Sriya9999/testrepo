@@ -22,7 +22,13 @@ This repository contains:
 docker compose up --build
 ```
 
-Then open http://localhost:3000 and create an account. The API is at http://localhost:8000 (OpenAPI docs at `/docs`).
+Then open http://localhost:3000 and create an account. The web server forwards `/api/v1` and `/media` to the API
+container, so the browser only ever talks to port 3000. The API is also published on http://localhost:8000
+(OpenAPI docs at `/docs`). To load the demo agency into the containers:
+
+```bash
+docker compose exec api python -m app.seed_demo
+```
 
 ### Without Docker
 
@@ -164,8 +170,8 @@ These need real app credentials (and, for Meta and Google Ads, platform review) 
 - **Offline AI mode:** writes English regardless of the language selected; non-English output needs an AI provider.
 - **Mobile:** account creation happens on the web. Detailed creative editing, SEO audits, campaign set-up and
   agency administration are web-only, as the PRD allows.
-- **Deployment:** Docker images were not built in this environment. Their entry points were verified separately:
-  the standalone Next.js server, and the API on a freshly migrated PostgreSQL database.
+- **Deployment:** the Docker stack (Postgres, Redis, API, worker, web) has been built and run end to end: migrations,
+  demo data, sign-in, content and image generation through the worker, and an agent run.
 
 ## Development
 

@@ -63,7 +63,7 @@ export default function DashboardPage() {
               <Select aria-label="Scope" value={scope} onChange={(e) => setScope(e.target.value as typeof scope)} className="w-40"
                 options={[{ value: "workspace", label: "Agency only" }, { value: "all_clients", label: "All my clients" }]} />
             )}
-            <Select aria-label="Platform" value={platform} onChange={(e) => setPlatform(e.target.value)} className="w-36"
+            <Select aria-label="Platform" value={platform} onChange={(e) => setPlatform(e.target.value)} className="w-40"
               options={[{ value: "", label: "All platforms" }, { value: "meta", label: "Meta" }, { value: "google", label: "Google" }]} />
             <RangePicker value={range} onChange={setRange} />
           </>
